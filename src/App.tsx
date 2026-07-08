@@ -1,16 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  Legend,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
 
 interface Stock {
   isin: string;
@@ -39,18 +29,7 @@ function App() {
   const [csno, setCsno] = useState("");
   const [email, setEmail] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const COLORS = [
-    "#e94560",
-    "#0f3460",
-    "#16213e",
-    "#1a1a2e",
-    "#533483",
-    "#2b9348",
-    "#aacc00",
-    "#f77f00",
-    "#d62828",
-    "#023e8a",
-  ];
+
 
   // 검색
   const handleSearch = async () => {
@@ -62,7 +41,7 @@ function App() {
       if (activeTab === "KR") {
         // 한국주식 검색
         const response = await fetch(
-          `http://localhost:4000/api/search/kr/${searchQuery}`,
+          `https://upbeat-contentment-production-56b4.up.railway.app/api/search/kr/${searchQuery}`,
         );
         const stocks: Stock[] = await response.json();
 
@@ -71,7 +50,7 @@ function App() {
             try {
               const symbol = stock.shotnIsin + ".KS";
               const priceRes = await fetch(
-                `http://localhost:4000/api/quote/${symbol}`,
+                `https://upbeat-contentment-production-56b4.up.railway.app/api/quote/${symbol}`,
               );
               const priceData = await priceRes.json();
               if (!priceData.regularMarketPrice) return null;
@@ -90,7 +69,7 @@ function App() {
       } else {
         // 미국주식 검색
         const response = await fetch(
-          `http://localhost:4000/api/search/${searchQuery}`,
+          `https://upbeat-contentment-production-56b4.up.railway.app/api/search/${searchQuery}`,
         );
         const data = await response.json();
         const quotes = data.quotes || [];
@@ -99,7 +78,7 @@ function App() {
           quotes.map(async (item: any) => {
             try {
               const priceRes = await fetch(
-                `http://localhost:4000/api/quote/${item.symbol}`,
+                `https://upbeat-contentment-production-56b4.up.railway.app/api/quote/${item.symbol}`,
               );
               const priceData = await priceRes.json();
               if (!priceData.regularMarketPrice) return null;
@@ -186,7 +165,7 @@ function App() {
     }
 
     try {
-      const response = await fetch("http://localhost:4000/api/etf/register", {
+      const response = await fetch("https://upbeat-contentment-production-56b4.up.railway.app/api/etf/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -216,7 +195,7 @@ function App() {
   const handleLoadMyEtf = async () => {
     try {
       const response = await fetch(
-        `http://localhost:4000/api/etf/list/${csno}`,
+        `https://upbeat-contentment-production-56b4.up.railway.app/api/etf/list/${csno}`,
       );
       const data = await response.json();
       setMyEtfList(data);
@@ -228,7 +207,7 @@ function App() {
   const handleProfitCalc = async (csno: string, seq: number) => {
     try {
       const response = await fetch(
-        `http://localhost:4000/api/etf/profit/${csno}/${seq}`,
+        `https://upbeat-contentment-production-56b4.up.railway.app/api/etf/profit/${csno}/${seq}`,
       );
       const data = await response.json();
       setProfitData((prev) => ({ ...prev, [`${csno}_${seq}`]: data }));
@@ -243,7 +222,7 @@ function App() {
       return;
     }
     try {
-      const response = await fetch("http://localhost:4000/api/auth/login", {
+      const response = await fetch("https://upbeat-contentment-production-56b4.up.railway.app/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
