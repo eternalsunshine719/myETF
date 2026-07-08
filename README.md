@@ -1,3 +1,7 @@
+## MyETF는 투자자가 자신의 투자 아이디어를 실제 데이터로 검증해 볼 수 있는 ETF 시뮬레이션 서비스입니다. 
+기존 ETF를 소비하는 것에서 나아가, 직접 구성하고 비교하며 투자 가설을 실험할 수 있도록 기획·개발했습니다.
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
